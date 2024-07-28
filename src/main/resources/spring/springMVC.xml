@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/mvc
+            https://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/context
+            https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--扫描controller层注解-->
+    <context:component-scan base-package="cn.zcs.controller"/>
+    <!--配置模板引擎-->
+    <bean id="springResourceTemplateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/page/"/>
+        <property name="suffix" value=".jsp"/>
+        <!--   解决中文乱码     -->
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="order" value="1"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false"/>
+    </bean>
+    <bean id="springTemplateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="springResourceTemplateResolver"/>
+    </bean>
+    <!--开放对上传功能的支持-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 指定所上传文件的总大小,单位字节。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10240000" />
+    </bean>
+    <!-- 配置thymeleaf视图解析器 -->
+    <bean id="thymeleafViewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="springTemplateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+    <!--开启注解驱动-->
+    <mvc:annotation-driven/>
+    <!--开通静态资源的访问   如果不开启无法使用静态样式-->
+    <mvc:default-servlet-handler/>
+<!--    &lt;!&ndash;静态资源处理&ndash;&gt;-->
+<!--    <mvc:resources mapping="/static/**" location="/static/"/>-->
+
+
+
+
+</beans>
