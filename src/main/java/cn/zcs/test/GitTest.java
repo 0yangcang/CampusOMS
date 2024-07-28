@@ -12,6 +12,7 @@ public class GitTest {
         System.out.println("hello world,master Once.");
         System.out.println("hello world,Twice.");
         System.out.println("hello GitHub,first push");
+        System.out.println("This is the changed on GitHub.");
     }
 
 }
